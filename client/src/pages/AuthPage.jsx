@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { BrainCircuit } from "lucide-react";
 import { toast } from "react-toastify";
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const AuthPage = () => {
   const [isRegister, setIsRegister] = useState(true);

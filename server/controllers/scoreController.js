@@ -9,7 +9,7 @@ const saveScore = async (req, res) => {
     }
 
     const newScore = new Score({
-      user: req.user._id, // ✅ fixed here
+      user: req.user._id, 
       name: req.user.name,
       score,
     });

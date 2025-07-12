@@ -4,6 +4,11 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { List, Loader2, X, House, PlayCircle, Loader } from "lucide-react";
 
+
+
+BASE_URL=import.meta.env.VITE_BASE_URL;
+
+
 const Home = () => {
   const [questions, setQuestions] = useState([]);
   const [userAnswers, setUserAnswers] = useState({});
@@ -77,7 +82,7 @@ const Home = () => {
 
      
       await axios.post(
-        "http://localhost:3000/score",
+        `${BASE_URL}/score`,
         { score: calculatedScore },
         {
           // headers: {
