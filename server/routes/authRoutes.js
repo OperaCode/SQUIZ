@@ -4,23 +4,31 @@ const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
-// Initiate login
-router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+// Initiate Google login
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
 
-// Callback route
-router.get("/google/callback",
+// Google OAuth callback route
+router.get(
+  "/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
   (req, res) => {
     const user = req.user;
+    console.log("✅ Google Authenticated User:", user);
+    const token = jwt.sign(
+      {
+        id: user.googleId,
+        name: user.name,
+        email: user.email,
+        avatar: user.avatar,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
 
-    const token = jwt.sign({
-      id: user.googleId,
-      name: user.name,
-      email: user.email,
-      avatar: user.avatar,
-    }, process.env.JWT_SECRET, { expiresIn: "1d" });
-
-    res.redirect(`http://localhost:5173?token=${token}`);
+    res.redirect(`http://localhost:5173/home?token=${token}`);
   }
 );
 
