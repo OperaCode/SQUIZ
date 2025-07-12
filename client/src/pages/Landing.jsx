@@ -18,7 +18,7 @@ const Landing = () => {
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-pink-300">SQUIZ</span>
         </h1>
         <nav className="flex items-center gap-6">
-          <a href="/about" className="text-white/80 hover:text-white transition duration-300 font-medium">About</a>
+         
           <Link to="/authentication">
             <button className="bg-yellow-400 text-purple-900 font-semibold px-6 py-2 rounded-full hover:bg-yellow-300 transition duration-300 transform hover:scale-105 shadow-md">
               Play Now
