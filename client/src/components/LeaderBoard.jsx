@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate,Link } from "react-router-dom";
 import { List, House, X, Loader, BrainCircuit} from "lucide-react";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const LeaderBoard = () => {
   const [scores, setScores] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,7 +13,7 @@ const LeaderBoard = () => {
   useEffect(() => {
     const fetchScores = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/score/leaderboard");
+        const res = await axios.get(`${BASE_URL}/score/leaderboard`);
         console.log(res);
         setScores(res.data);
       } catch (error) {
