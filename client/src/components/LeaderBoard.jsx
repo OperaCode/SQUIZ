@@ -116,7 +116,7 @@ const LeaderBoard = () => {
   );
 };
 
-// 🥇 Badge generator
+// Helper function for rank badges
 const getBadge = (index) => {
   switch (index) {
     case 0:

@@ -16,16 +16,42 @@ const AuthPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Check URL for Google token
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get("token");
-    if (token) {
+ useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get("token");
+
+  const fetchUserProfile = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/user/profile`, {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+      });
+
+      const userData = {
+        token,
+        name: res.data.name,
+        email: res.data.email,
+        _id: res.data._id,
+        avatar: res.data.avatar,
+      };
+
+      localStorage.setItem("quizUser", JSON.stringify(userData));
       localStorage.setItem("quizUserToken", token);
-      toast.success("Google Login Successful");
+
+      toast.success(`Welcome ${res.data.name}`);
       navigate("/home");
+    } catch (error) {
+      console.error("Error fetching Google user profile:", error);
+      toast.error("Google login failed. Please try again.");
     }
-  }, [navigate]);
+  };
+
+  if (token) {
+    fetchUserProfile();
+  }
+}, [navigate]);
+
+
 
   const toggleForm = () => {
     setIsRegister(!isRegister);
@@ -45,7 +71,9 @@ const AuthPage = () => {
     setLoading(true);
     try {
       const res = await axios.post(url, formData, { withCredentials: true });
+      console.log(res.data)
       localStorage.setItem("quizUser", JSON.stringify(res.data));
+     
       toast.success("Success!");
       navigate("/home");
     } catch (error) {
@@ -133,14 +161,14 @@ const AuthPage = () => {
         </form>
 
         {/* Google Sign-In Button */}
-        <div className="mt-6 text-center">
+        {/* <div className="mt-6 text-center">
           <a href={`${BASE_URL}/auth/google`}>
             <button className="w-full flex justify-center items-center gap-3 bg-white border border-gray-300 text-gray-700 font-semibold py-3 rounded-lg shadow hover:bg-gray-50 transition">
               <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5" />
               Continue with Google
             </button>
           </a>
-        </div>
+        </div> */}
 
         <div className="mt-6 text-center">
           <p className="text-sm text-purple-700">

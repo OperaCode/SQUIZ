@@ -13,7 +13,7 @@ const Home = () => {
 
   const user = JSON.parse(localStorage.getItem("quizUser"));
 
-
+  // fetch question upon page load
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -41,6 +41,7 @@ const Home = () => {
 
   const shuffle = (array) => array.sort(() => Math.random() - 0.5);
 
+  // select answer
   const handleOptionSelect = (questionId, option) => {
     setUserAnswers({
       ...userAnswers,
@@ -48,20 +49,16 @@ const Home = () => {
     });
   };
 
+  // reset form/question
   const resetAnswers = () => {
     setUserAnswers({});
     setScore(null);
     toast.info("Answers reset", { autoClose: 2000 });
   };
 
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (Object.keys(userAnswers).length < questions.length) {
-      const confirmSubmit = window.confirm(
-        "Not all questions are answered. Submit anyway?"
-      );
-      if (!confirmSubmit) return;
-    }
 
     let calculatedScore = 0;
     questions.forEach((q) => {
@@ -73,6 +70,12 @@ const Home = () => {
     setScore(calculatedScore);
 
     try {
+      const user = JSON.parse(localStorage.getItem("quizUser"));
+      console.log(localStorage.getItem("quizUser"));
+
+      console.log("User token:", user.token); 
+
+     
       await axios.post(
         "http://localhost:3000/score",
         { score: calculatedScore },
@@ -83,15 +86,6 @@ const Home = () => {
           withCredentials: true,
         }
       );
-      // const user = JSON.parse(localStorage.getItem("quizUser"));
-      // await axios.post(
-      //   "http://localhost:3000/score",
-      //   { score: calculatedScore },
-      //   {
-      //     headers: { Authorization: `Bearer ${user.token}` },
-      //   }
-      // );
-
       toast.success("Score saved!", { autoClose: 2000 });
     } catch (error) {
       console.error("Error saving score:", error);
