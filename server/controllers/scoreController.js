@@ -4,17 +4,26 @@ const Score = require('../models/scoreModel');
 const saveScore = async (req, res) => {
   const { score } = req.body;
   try {
+    if (!req.user) {
+      return res.status(401).json({ message: 'User not authenticated' });
+    }
+
     const newScore = new Score({
-      user: req.user._id, // store user ID for reference
-      name: req.user.name, // take name from authenticated user
+      user: req.user._id, // ✅ fixed here
+      name: req.user.name,
       score,
     });
+    console.log(newScore)
+
     await newScore.save();
     res.status(201).json(newScore);
   } catch (err) {
+    console.error("Error saving score:", err);
     res.status(500).json({ message: err.message });
   }
 };
+
+
 
 
 // Get leaderboard

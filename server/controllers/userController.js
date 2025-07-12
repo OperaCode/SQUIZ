@@ -127,6 +127,7 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     let user = await User.findOne({ email });
+    console.log(user)
 
     // Check if the user exists
     if (!user) {
@@ -155,6 +156,7 @@ const loginUser = async (req, res) => {
         email: user.email,
         
       },
+      token: token,
     });
 
     console.log(user);
@@ -163,5 +165,7 @@ const loginUser = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+
 
 module.exports = { registerUser, loginUser };

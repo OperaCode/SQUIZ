@@ -10,7 +10,7 @@ router.get(
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
-// Google OAuth callback route
+
 router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
@@ -19,7 +19,7 @@ router.get(
     console.log("✅ Google Authenticated User:", user);
     const token = jwt.sign(
       {
-        id: user.googleId,
+        id: user._id,  
         name: user.name,
         email: user.email,
         avatar: user.avatar,

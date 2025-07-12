@@ -20,19 +20,16 @@ const protectUser = asyncHandler(async (req, res, next) => {
   try {
     console.log("🔹 Verifying token...");
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.userId = decoded.id;
-    // req.user = await userModel.findById(decoded.id).select("-password");
-
-    console.log("Auth header:", req.headers.authorization);
     console.log("Decoded user:", decoded);
 
-    console.log("🔹 Fetching user from DB...");
-    const foundUser = await userModel.findById(req.userId).select("-password");
+    const foundUser = await userModel.findById(decoded.id).select("-password");
 
     if (!foundUser) {
       console.warn("⚠️ User not found.");
       return res.status(401).json({ message: "Unauthorized, user not found" });
     }
+
+    req.user = foundUser; 
 
     console.log("Authentication successful for user:", foundUser.email);
     next();
@@ -43,4 +40,3 @@ const protectUser = asyncHandler(async (req, res, next) => {
 });
 
 module.exports = { protectUser };
-

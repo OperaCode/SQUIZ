@@ -25,7 +25,7 @@ app.use(cookieParser());
 const cors = require("cors");
 const allowedOrigins = [
   "http://localhost:5173",
-//   "https://pay-wise-ecru.vercel.app"
+
 ];
 
 
@@ -56,7 +56,7 @@ app.use("/user", require("./routes/userRoutes"));
 app.use("/score", require("./routes/scoreRoutes"));
 
 
-// Console.logs- FOR TEST
+// Consolelogs- FOR TEST
 // app.get("/auth/google", (req, res, next) => {
 //   console.log("HIT /auth/google route");
 //   next();
