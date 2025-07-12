@@ -25,12 +25,12 @@ app.use(cookieParser());
 const cors = require("cors");
 const allowedOrigins = [
   "http://localhost:5173",
-
+  "https://squiz-gamma.vercel.app/"
 ];
 
 
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: allowedOrigins,
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
