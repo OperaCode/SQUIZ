@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import { List, House, X, Loader, BrainCircuit} from "lucide-react";
 
 const LeaderBoard = () => {
@@ -27,31 +27,7 @@ const LeaderBoard = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-500 to-red-500 text-white px-4 py-8">
       {/* Header */}
-      <header className="w-full py-4 px-6 flex justify-between items-center bg-white/10 backdrop-blur-md sticky top-0 z-10 shadow-md">
-        <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
-          <List size={24} className="text-yellow-300" />
-          Quizify
-        </h1>
-        <nav className="flex gap-4">
-          <button
-            type="button"
-            onClick={() => navigate("/home")}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-400 text-purple-900 font-semibold hover:bg-yellow-300 transition duration-300"
-          >
-            <House size={20} />
-            Home
-          </button>
-
-          <button
-            type="button"
-            onClick={() => navigate("/")}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-red-500 text-white font-semibold hover:bg-red-400 transition duration-300"
-          >
-            <X size={20} />
-            Exit
-          </button>
-        </nav>
-      </header>
+     
 
        <header className="w-full py-5 px-6 gap-4 flex justify-between items-center bg-white/10 backdrop-blur-lg sticky top-0 z-20 shadow-lg">
               <h1 className="text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-3">
