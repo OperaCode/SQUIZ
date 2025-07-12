@@ -87,20 +87,24 @@ const AuthPage = () => {
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-purple-700 via-pink-500 to-red-500 px-4 py-8">
       {/* Header */}
-      <header className="w-full py-5 px-8 flex justify-between items-center bg-white/10 backdrop-blur-lg sticky top-0 z-20 shadow-lg">
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-3">
-          <BrainCircuit size={28} className="text-yellow-300 animate-bounce-slow" />
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-pink-300">SQUIZ</span>
-        </h1>
-        <nav className="flex items-center gap-6">
-          <a href="/about" className="text-white/80 hover:text-white transition duration-300 font-medium">About</a>
-          <Link to="/authentication">
-            <button className="bg-yellow-400 text-purple-900 font-semibold px-6 py-2 rounded-full hover:bg-yellow-300 transition duration-300 transform hover:scale-105 shadow-md">
-              Play Now
-            </button>
-          </Link>
-        </nav>
-      </header>
+       <header className="w-full py-5 px-6 gap-4 flex justify-between items-center bg-white/10 backdrop-blur-lg sticky top-0 z-20 shadow-lg">
+              <h1 className="text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-3">
+                <BrainCircuit
+                  size={28}
+                  className="text-yellow-300 animate-bounce-slow"
+                />
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-pink-300">
+                  SQUIZ
+                </span>
+              </h1>
+              <nav className="flex  gap-6">
+                <Link to="/leaderboard">
+                  <button className="bg-yellow-400 text-xs md:text-sm text-purple-900 font-semibold px-6 py-2 rounded-full hover:bg-yellow-300 transition duration-300 transform hover:scale-105 shadow-md">
+                    Leaderboard
+                  </button>
+                </Link>
+              </nav>
+            </header>
 
       {/* Form Card */}
       <div className="bg-white/90 backdrop-blur-lg shadow-2xl rounded-2xl p-8 m-auto w-full max-w-md mt-8 animate-fadeIn">

@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { List, Loader2, X, House, PlayCircle, Loader } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import { BrainCircuit, Loader } from "lucide-react";
 
-
-
-BASE_URL=import.meta.env.VITE_BASE_URL;
-
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Home = () => {
   const [questions, setQuestions] = useState([]);
@@ -35,7 +32,7 @@ const Home = () => {
         toast.success("Questions loaded!", { autoClose: 2000 });
       } catch (error) {
         console.error("Error fetching questions:", error);
-        toast.error("Failed to load questions", { autoClose: 2000 });
+        // toast.error("Failed to load questions", { autoClose: 2000 });
       } finally {
         setLoading(false);
       }
@@ -61,7 +58,6 @@ const Home = () => {
     toast.info("Answers reset", { autoClose: 2000 });
   };
 
- 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -78,9 +74,8 @@ const Home = () => {
       const user = JSON.parse(localStorage.getItem("quizUser"));
       console.log(localStorage.getItem("quizUser"));
 
-      console.log("User token:", user.token); 
+      console.log("User token:", user.token);
 
-     
       await axios.post(
         `${BASE_URL}/score`,
         { score: calculatedScore },
@@ -101,36 +96,23 @@ const Home = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-purple-600 via-pink-500 to-red-500 px-4 py-8 text-white">
       {/* Header */}
-      <header className="w-full py-4 px-6 flex justify-between items-center bg-white/10 backdrop-blur-md sticky top-0 z-10 shadow-md">
-        <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
-          <List size={24} className="text-yellow-300" />
-          SQUIZ
+
+      <header className="w-full py-5 px-6 gap-4 flex justify-between items-center bg-white/10 backdrop-blur-lg sticky top-0 z-20 shadow-lg">
+        <h1 className="text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-3">
+          <BrainCircuit
+            size={28}
+            className="text-yellow-300 animate-bounce-slow"
+          />
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-pink-300">
+            SQUIZ
+          </span>
         </h1>
-        <nav className="flex gap-4">
-          <button
-            type="button"
-            onClick={() => navigate("/")}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-400 text-purple-900 font-semibold hover:bg-yellow-300 transition duration-300"
-          >
-            <House size={20} />
-            Home
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate("/leaderboard")}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-400 text-purple-900 font-semibold hover:bg-yellow-300 transition duration-300"
-          >
-            <List size={20} />
-            Leaderboard
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate("/")}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-red-500 text-white font-semibold hover:bg-red-400 transition duration-300"
-          >
-            <X size={20} />
-            Exit
-          </button>
+        <nav className="flex  gap-6">
+          <Link to="/leaderboard">
+            <button className="bg-yellow-400 text-xs md:text-sm text-purple-900 font-semibold px-6 py-2 rounded-full hover:bg-yellow-300 transition duration-300 transform hover:scale-105 shadow-md">
+              Leaderboard
+            </button>
+          </Link>
         </nav>
       </header>
 

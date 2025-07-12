@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { List, House, X, Loader } from "lucide-react";
+import { List, House, X, Loader, BrainCircuit} from "lucide-react";
 
 const LeaderBoard = () => {
   const [scores, setScores] = useState([]);
@@ -12,7 +12,7 @@ const LeaderBoard = () => {
     const fetchScores = async () => {
       try {
         const res = await axios.get("http://localhost:3000/score/leaderboard");
-        console.log(res)
+        console.log(res);
         setScores(res.data);
       } catch (error) {
         console.error("Error fetching leaderboard:", error);
@@ -41,14 +41,7 @@ const LeaderBoard = () => {
             <House size={20} />
             Home
           </button>
-          <button
-            type="button"
-            onClick={() => navigate("/leaderboard")}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-400 text-purple-900 font-semibold hover:bg-yellow-300 transition duration-300"
-          >
-            <List size={20} />
-            Leaderboard
-          </button>
+
           <button
             type="button"
             onClick={() => navigate("/")}
@@ -59,6 +52,25 @@ const LeaderBoard = () => {
           </button>
         </nav>
       </header>
+
+       <header className="w-full py-5 px-6 gap-4 flex justify-between items-center bg-white/10 backdrop-blur-lg sticky top-0 z-20 shadow-lg">
+              <h1 className="text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-3">
+                <BrainCircuit
+                  size={28}
+                  className="text-yellow-300 animate-bounce-slow"
+                />
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-pink-300">
+                  SQUIZ
+                </span>
+              </h1>
+              <nav className="flex  gap-6">
+                <Link to="/">
+                  <button className="bg-yellow-400 text-xs md:text-sm text-purple-900 font-semibold px-6 py-2 rounded-full hover:bg-yellow-300 transition duration-300 transform hover:scale-105 shadow-md">
+                    Exit
+                  </button>
+                </Link>
+              </nav>
+            </header>
 
       <main className="max-w-2xl mx-auto mt-10">
         <h2 className="text-4xl sm:text-5xl font-extrabold mb-6 text-center drop-shadow-lg">
