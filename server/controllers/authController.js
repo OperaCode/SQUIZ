@@ -1,5 +1,8 @@
 const jwt = require("jsonwebtoken");
 
+BASE_URL=process.env.FRONTEND_URL;
+
+
 const generateTokenAndRedirect = (req, res) => {
   const user = req.user;
 
@@ -14,7 +17,7 @@ const generateTokenAndRedirect = (req, res) => {
     { expiresIn: "1d" }
   );
 
-  res.redirect(`http://localhost:5173?token=${token}`);
+  res.redirect(`${BASE_URL}?token=${token}`);
 };
 
 module.exports = { generateTokenAndRedirect };
