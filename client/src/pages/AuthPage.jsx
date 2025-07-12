@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { BrainCircuit } from "lucide-react";
 import { toast } from "react-toastify";
-// import { Link } from "react-router-dom";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -16,6 +15,17 @@ const AuthPage = () => {
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check URL for Google token
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+    if (token) {
+      localStorage.setItem("quizUserToken", token);
+      toast.success("Google Login Successful");
+      navigate("/home");
+    }
+  }, [navigate]);
 
   const toggleForm = () => {
     setIsRegister(!isRegister);
@@ -47,7 +57,7 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="w-full min-h-screen  bg-gradient-to-br from-purple-700 via-pink-500 to-red-500 px-4 py-8">
+    <div className="w-full min-h-screen bg-gradient-to-br from-purple-700 via-pink-500 to-red-500 px-4 py-8">
       {/* Header */}
       <header className="w-full py-5 px-8 flex justify-between items-center bg-white/10 backdrop-blur-lg sticky top-0 z-20 shadow-lg">
         <h1 className="text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-3">
@@ -73,9 +83,7 @@ const AuthPage = () => {
         <form onSubmit={handleSubmit} className="space-y-5">
           {isRegister && (
             <div>
-              <label className="block text-sm font-semibold mb-1 text-purple-700">
-                Name
-              </label>
+              <label className="block text-sm font-semibold mb-1 text-purple-700">Name</label>
               <input
                 type="text"
                 name="name"
@@ -89,9 +97,7 @@ const AuthPage = () => {
           )}
 
           <div>
-            <label className="block text-sm font-semibold mb-1 text-purple-700">
-              Email
-            </label>
+            <label className="block text-sm font-semibold mb-1 text-purple-700">Email</label>
             <input
               type="email"
               name="email"
@@ -104,9 +110,7 @@ const AuthPage = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold mb-1 text-purple-700">
-              Password
-            </label>
+            <label className="block text-sm font-semibold mb-1 text-purple-700">Password</label>
             <input
               type="password"
               name="password"
@@ -124,19 +128,23 @@ const AuthPage = () => {
             disabled={loading}
             className="w-full bg-gradient-to-r from-yellow-400 to-pink-400 text-purple-900 py-3 rounded-lg font-bold hover:opacity-90 transform hover:scale-105 transition duration-300 disabled:opacity-50"
           >
-            {loading
-              ? "Processing..."
-              : isRegister
-              ? "Register"
-              : "Login"}
+            {loading ? "Processing..." : isRegister ? "Register" : "Login"}
           </button>
         </form>
 
+        {/* Google Sign-In Button */}
+        <div className="mt-6 text-center">
+          <a href={`${BASE_URL}/auth/google`}>
+            <button className="w-full flex justify-center items-center gap-3 bg-white border border-gray-300 text-gray-700 font-semibold py-3 rounded-lg shadow hover:bg-gray-50 transition">
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5" />
+              Continue with Google
+            </button>
+          </a>
+        </div>
+
         <div className="mt-6 text-center">
           <p className="text-sm text-purple-700">
-            {isRegister
-              ? "Already have an account?"
-              : "Don't have an account?"}
+            {isRegister ? "Already have an account?" : "Don't have an account?"}
             <button
               type="button"
               onClick={toggleForm}
@@ -148,22 +156,11 @@ const AuthPage = () => {
         </div>
       </div>
 
-      {/* Animation styles */}
       <style jsx="true">{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.8s ease-out forwards;
-        }
-        @keyframes bounceSlow {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-4px); }
-        }
-        .animate-bounce-slow {
-          animation: bounceSlow 2.5s infinite ease-in-out;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fadeIn { animation: fadeIn 0.8s ease-out forwards; }
+        @keyframes bounceSlow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+        .animate-bounce-slow { animation: bounceSlow 2.5s infinite ease-in-out; }
       `}</style>
     </div>
   );
